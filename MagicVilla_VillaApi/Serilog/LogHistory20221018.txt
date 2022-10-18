@@ -1,0 +1,42 @@
+2022-10-18 16:17:57.073 +04:00 [INF] Now listening on: https://localhost:7160
+2022-10-18 16:17:57.131 +04:00 [INF] Now listening on: http://localhost:5160
+2022-10-18 16:17:57.135 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-10-18 16:17:57.135 +04:00 [INF] Hosting environment: Development
+2022-10-18 16:17:57.135 +04:00 [INF] Content root path: C:\Users\mamma\source\repos\MagicVilla\MagicVilla_VillaApi\
+2022-10-18 16:17:57.564 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7160/swagger/index.html - -
+2022-10-18 16:17:57.937 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7160/_framework/aspnetcore-browser-refresh.js - -
+2022-10-18 16:17:57.940 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7160/swagger/index.html - - - 200 - text/html;charset=utf-8 379.5836ms
+2022-10-18 16:17:57.952 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7160/_framework/aspnetcore-browser-refresh.js - - - 200 12008 application/javascript;+charset=utf-8 14.7155ms
+2022-10-18 16:17:58.079 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7160/_vs/browserLink - -
+2022-10-18 16:17:58.102 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7160/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 23.6958ms
+2022-10-18 16:17:58.251 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7160/swagger/v1/swagger.json - -
+2022-10-18 16:17:58.432 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7160/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 180.6300ms
+2022-10-18 16:18:22.693 +04:00 [INF] Now listening on: https://localhost:7160
+2022-10-18 16:18:22.751 +04:00 [INF] Now listening on: http://localhost:5160
+2022-10-18 16:18:22.756 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-10-18 16:18:22.757 +04:00 [INF] Hosting environment: Development
+2022-10-18 16:18:22.757 +04:00 [INF] Content root path: C:\Users\mamma\source\repos\MagicVilla\MagicVilla_VillaApi\
+2022-10-18 16:18:23.302 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7160/swagger/index.html - -
+2022-10-18 16:18:23.658 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7160/_framework/aspnetcore-browser-refresh.js - -
+2022-10-18 16:18:23.665 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7160/_framework/aspnetcore-browser-refresh.js - - - 200 12008 application/javascript;+charset=utf-8 6.7459ms
+2022-10-18 16:18:23.674 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7160/swagger/index.html - - - 200 - text/html;charset=utf-8 376.7694ms
+2022-10-18 16:18:23.797 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7160/_vs/browserLink - -
+2022-10-18 16:18:23.819 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7160/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 22.5765ms
+2022-10-18 16:18:23.957 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7160/swagger/v1/swagger.json - -
+2022-10-18 16:18:24.136 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7160/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 178.5732ms
+2022-10-18 16:18:29.089 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7160/api/VillaApi/GetVillas - -
+2022-10-18 16:18:29.099 +04:00 [INF] Executing endpoint 'MagicVilla_VillaApi.Controllers.VillaApiController.GetVillas (MagicVilla_VillaApi)'
+2022-10-18 16:18:29.110 +04:00 [INF] Route matched with {action = "GetVillas", controller = "VillaApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[MagicVilla_VillaApi.Models.Dtos.VillaDto]] GetVillas() on controller MagicVilla_VillaApi.Controllers.VillaApiController (MagicVilla_VillaApi).
+2022-10-18 16:18:29.112 +04:00 [INF] yes
+2022-10-18 16:18:29.120 +04:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MagicVilla_VillaApi.Models.Dtos.VillaDto, MagicVilla_VillaApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-10-18 16:18:29.340 +04:00 [INF] Executed action MagicVilla_VillaApi.Controllers.VillaApiController.GetVillas (MagicVilla_VillaApi) in 223.643ms
+2022-10-18 16:18:29.343 +04:00 [INF] Executed endpoint 'MagicVilla_VillaApi.Controllers.VillaApiController.GetVillas (MagicVilla_VillaApi)'
+2022-10-18 16:18:29.343 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7160/api/VillaApi/GetVillas - - - 200 176 application/json;+charset=utf-8 254.2597ms
+2022-10-18 16:18:30.990 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7160/api/VillaApi/GetVillas - -
+2022-10-18 16:18:30.992 +04:00 [INF] Executing endpoint 'MagicVilla_VillaApi.Controllers.VillaApiController.GetVillas (MagicVilla_VillaApi)'
+2022-10-18 16:18:30.992 +04:00 [INF] Route matched with {action = "GetVillas", controller = "VillaApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[MagicVilla_VillaApi.Models.Dtos.VillaDto]] GetVillas() on controller MagicVilla_VillaApi.Controllers.VillaApiController (MagicVilla_VillaApi).
+2022-10-18 16:18:30.992 +04:00 [INF] yes
+2022-10-18 16:18:30.993 +04:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MagicVilla_VillaApi.Models.Dtos.VillaDto, MagicVilla_VillaApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-10-18 16:18:30.993 +04:00 [INF] Executed action MagicVilla_VillaApi.Controllers.VillaApiController.GetVillas (MagicVilla_VillaApi) in 0.4787ms
+2022-10-18 16:18:30.993 +04:00 [INF] Executed endpoint 'MagicVilla_VillaApi.Controllers.VillaApiController.GetVillas (MagicVilla_VillaApi)'
+2022-10-18 16:18:30.993 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7160/api/VillaApi/GetVillas - - - 200 176 application/json;+charset=utf-8 3.0725ms
