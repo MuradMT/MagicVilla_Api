@@ -1,4 +1,5 @@
-﻿using MagicVilla_VillaApi.Data;
+﻿using AutoMapper;
+using MagicVilla_VillaApi.Data;
 using MagicVilla_VillaApi.Logging.Abstract;
 using MagicVilla_VillaApi.Mapping;
 using MagicVilla_VillaApi.Models;
@@ -24,9 +25,11 @@ namespace MagicVilla_VillaApi.Controllers
         //}
         #endregion
         private ApplicationDbContext _dbContext;
-        public VillaApiController(ApplicationDbContext dbContext)
+        private IMapper _mapper;
+        public VillaApiController(ApplicationDbContext dbContext,IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;   
         }
         [HttpGet("[action]", Name = "GetVillas")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -38,7 +41,8 @@ namespace MagicVilla_VillaApi.Controllers
 
             //return Ok(VillaStore.villaList);
             #endregion
-            return Ok(await _dbContext.Villas.ToListAsync());
+            var villas = await _dbContext.Villas.ToListAsync();
+            return Ok(_mapper.Map<VillaDto>(villas));
         }
 
         [HttpGet("[action]", Name = "GetVilla")]
@@ -66,7 +70,7 @@ namespace MagicVilla_VillaApi.Controllers
             {
                 return NotFound();
             }
-            return Ok(result);
+            return Ok(_mapper.Map<VillaDto>(result));
         }
 
         [HttpPost("[action]", Name = "CreateVilla")]
@@ -100,7 +104,7 @@ namespace MagicVilla_VillaApi.Controllers
             //villaDto.Id = VillaStore.villaList.OrderByDescending(u => u.Id).FirstOrDefault().Id + 1;
             //VillaStore.villaList.Add(villaDto);
             #endregion
-            var model = Map.VillaCreateMapper(villaDto);
+            var model =_mapper.Map<Villa>(villaDto);
             await _dbContext.Villas.AddAsync(model);
             await _dbContext.SaveChangesAsync();
             return CreatedAtRoute("GetVilla", new { id = model.Id },model);
@@ -152,7 +156,7 @@ namespace MagicVilla_VillaApi.Controllers
             #endregion
 
            
-            _dbContext.Villas.Update(Map.VillaUpdateMapper(villaDto));
+            _dbContext.Villas.Update(_mapper.Map<Villa>(villaDto));
             await _dbContext.SaveChangesAsync();
             return NoContent();
         }
@@ -171,7 +175,7 @@ namespace MagicVilla_VillaApi.Controllers
             //var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
             #endregion
             var villa = await _dbContext.Villas.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
-            var villadto = Map.VillaUpdatedMapper(villa);
+            var villadto =_mapper.Map<VillaUpdateDto>(villa);
             if (villa == null)
             {
                 return NotFound();
@@ -181,7 +185,7 @@ namespace MagicVilla_VillaApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var model=Map.VillaUpdateMapper(villadto);
+            var model=_mapper.Map<Villa>(villadto);
             _dbContext.Villas.Update(model);
             await _dbContext.SaveChangesAsync();
             return NoContent();

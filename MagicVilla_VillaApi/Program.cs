@@ -1,5 +1,6 @@
 using MagicVilla_VillaApi.Logging.Abstract;
 using MagicVilla_VillaApi.Logging.Concrete;
+using MagicVilla_VillaApi.Mapping.AutoMapper;
 using MagicVilla_VillaApi.Models.Contexts;
 using MagicVilla_VillaApi.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace MagicVilla_VillaApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddAutoMapper(typeof(MappingConfig));
             builder.Services.AddDbContext<ApplicationDbContext>(option=>
             option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSqlConnection")));
             // Add services to the container.
@@ -25,7 +27,7 @@ namespace MagicVilla_VillaApi
             builder.Services.AddSwaggerGen();
             //builder.Services.AddSingleton<ILogging<VillaDto>,Logging<VillaDto>>();
             var app = builder.Build();
-
+        
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
