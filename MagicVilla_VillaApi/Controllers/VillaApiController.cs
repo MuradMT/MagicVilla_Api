@@ -11,6 +11,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MagicVilla_VillaApi.Controllers
 {
+    //IEnumerable-Collection tipi belli deyilse istifade ede bilerik,iterasiya 
+    //ede bilmeyimize komek edir
+
+
     [Route("api/[controller]")]
     [ApiController]
     public class VillaApiController : ControllerBase
