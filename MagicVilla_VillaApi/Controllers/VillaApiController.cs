@@ -5,6 +5,7 @@ using MagicVilla_VillaApi.Mapping;
 using MagicVilla_VillaApi.Models;
 using MagicVilla_VillaApi.Models.Contexts;
 using MagicVilla_VillaApi.Models.Dtos;
+using MagicVilla_VillaApi.Repositories.IRepository;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,11 +29,11 @@ namespace MagicVilla_VillaApi.Controllers
         //    _logger = logger;
         //}
         #endregion
-        private ApplicationDbContext _dbContext;
+        private IVillaRepository _db;
         private IMapper _mapper;
-        public VillaApiController(ApplicationDbContext dbContext,IMapper mapper)
+        public VillaApiController(IVillaRepository db,IMapper mapper)
         {
-            _dbContext = dbContext;
+            _db=db;
             _mapper = mapper;   
         }
         [HttpGet("[action]", Name = "GetVillas")]
@@ -45,8 +46,8 @@ namespace MagicVilla_VillaApi.Controllers
 
             //return Ok(VillaStore.villaList);
             #endregion
-            var villas = await _dbContext.Villas.ToListAsync();
-            return Ok(_mapper.Map<VillaDto>(villas));
+            var villas = await _db.GetAllAsync();
+            return Ok(_mapper.Map<List<VillaDto>>(villas));
         }
 
         [HttpGet("[action]", Name = "GetVilla")]
@@ -68,7 +69,7 @@ namespace MagicVilla_VillaApi.Controllers
             //var result = VillaStore.villaList.FirstOrDefault(p => p.Id == id);
             #endregion
 
-            var result =await _dbContext.Villas.FirstOrDefaultAsync(p => p.Id == id);
+            var result =await _db.GetAsync(p => p.Id == id);
             
             if (result == null)
             {
@@ -109,8 +110,8 @@ namespace MagicVilla_VillaApi.Controllers
             //VillaStore.villaList.Add(villaDto);
             #endregion
             var model =_mapper.Map<Villa>(villaDto);
-            await _dbContext.Villas.AddAsync(model);
-            await _dbContext.SaveChangesAsync();
+            await _db.CreateAsync(model);
+            await _db.SaveAsync();
             return CreatedAtRoute("GetVilla", new { id = model.Id },model);
         }
 
@@ -129,7 +130,7 @@ namespace MagicVilla_VillaApi.Controllers
             //var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
             #endregion
 
-            var villa =await _dbContext.Villas.FirstOrDefaultAsync(u => u.Id == id);
+            var villa =await _db.GetAsync(u => u.Id == id);
             if (villa == null)
             {
                 return NotFound();
@@ -138,8 +139,8 @@ namespace MagicVilla_VillaApi.Controllers
             //VillaStore.villaList.Remove(villa);
             #endregion
 
-             _dbContext.Villas.Remove(villa);
-            await _dbContext.SaveChangesAsync();
+             await _db.RemoveAsync(villa);
+            await _db.SaveAsync();
             return NoContent();
         }
 
@@ -160,8 +161,8 @@ namespace MagicVilla_VillaApi.Controllers
             #endregion
 
            
-            _dbContext.Villas.Update(_mapper.Map<Villa>(villaDto));
-            await _dbContext.SaveChangesAsync();
+            await _db.UpdateAsync(_mapper.Map<Villa>(villaDto));
+            await _db.SaveAsync();
             return NoContent();
         }
 
@@ -178,7 +179,7 @@ namespace MagicVilla_VillaApi.Controllers
             #region Comments
             //var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
             #endregion
-            var villa = await _dbContext.Villas.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
+            var villa = await _db.GetAsync(u => u.Id == id,false);
             var villadto =_mapper.Map<VillaUpdateDto>(villa);
             if (villa == null)
             {
@@ -190,8 +191,8 @@ namespace MagicVilla_VillaApi.Controllers
                 return BadRequest(ModelState);
             }
             var model=_mapper.Map<Villa>(villadto);
-            _dbContext.Villas.Update(model);
-            await _dbContext.SaveChangesAsync();
+            await _db.UpdateAsync(model);
+            await _db.SaveAsync();
             return NoContent();
         }
 

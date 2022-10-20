@@ -3,6 +3,8 @@ using MagicVilla_VillaApi.Logging.Concrete;
 using MagicVilla_VillaApi.Mapping.AutoMapper;
 using MagicVilla_VillaApi.Models.Contexts;
 using MagicVilla_VillaApi.Models.Dtos;
+using MagicVilla_VillaApi.Repositories;
+using MagicVilla_VillaApi.Repositories.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -25,6 +27,7 @@ namespace MagicVilla_VillaApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<IVillaRepository, VillaRepository>();
             //builder.Services.AddSingleton<ILogging<VillaDto>,Logging<VillaDto>>();
             var app = builder.Build();
         
