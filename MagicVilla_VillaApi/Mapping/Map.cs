@@ -20,9 +20,54 @@ namespace MagicVilla_VillaApi.Mapping
             };
             return model;
         }
+        public static Villa VillaUpdateMapper(VillaUpdateDto villaDto)
+        {
+            Villa model = new Villa()
+            {
+                Name = villaDto.Name,
+                Id = villaDto.Id,
+                Sqft = villaDto.Sqft,
+                Amenity = villaDto.Amenity,
+                Details = villaDto.Details,
+                ImageUrl = villaDto.ImageUrl,
+                Occupancy = villaDto.Occupancy,
+                Rate = villaDto.Rate
+            };
+            return model;
+        }
+        public static Villa VillaCreateMapper(VillaCreateDto villaDto)
+        {
+            Villa model = new Villa()
+            {
+                Name = villaDto.Name,
+                Sqft = villaDto.Sqft,
+                Amenity = villaDto.Amenity,
+                Details = villaDto.Details,
+                ImageUrl = villaDto.ImageUrl,
+                Occupancy = villaDto.Occupancy,
+                Rate = villaDto.Rate
+            };
+            return model;
+        }
+
         public static VillaDto VillaDtoMapper(Villa villa)
         {
             VillaDto model = new VillaDto()
+            {
+                Name = villa.Name,
+                Id = villa.Id,
+                Sqft = villa.Sqft,
+                Amenity = villa.Amenity,
+                Details = villa.Details,
+                ImageUrl = villa.ImageUrl,
+                Occupancy = villa.Occupancy,
+                Rate = villa.Rate
+            };
+            return model;
+        }
+        public static VillaUpdateDto VillaUpdatedMapper(Villa villa)
+        {
+            VillaUpdateDto model = new VillaUpdateDto()
             {
                 Name = villa.Name,
                 Id = villa.Id,
