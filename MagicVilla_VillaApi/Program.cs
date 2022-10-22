@@ -28,6 +28,7 @@ namespace MagicVilla_VillaApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IVillaRepository, VillaRepository>();
+            builder.Services.AddScoped<IVillaNumberRepository, VillaNumberRepository>();
             //builder.Services.AddSingleton<ILogging<VillaDto>,Logging<VillaDto>>();
             var app = builder.Build();
         
