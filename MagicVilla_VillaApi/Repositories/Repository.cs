@@ -44,7 +44,7 @@ namespace MagicVilla_VillaApi.Repositories
             {
                 query = query.Where(filter);
             }
-            return await query.ToListAsync() :
+            return await query.ToListAsync();
                
         }
 
