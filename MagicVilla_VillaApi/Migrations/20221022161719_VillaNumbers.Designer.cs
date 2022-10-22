@@ -4,6 +4,7 @@ using MagicVilla_VillaApi.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicVilla_VillaApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221022161719_VillaNumbers")]
+    partial class VillaNumbers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +72,7 @@ namespace MagicVilla_VillaApi.Migrations
                         {
                             Id = 1,
                             Amenity = "",
-                            CreatedDate = new DateTime(2022, 10, 22, 22, 25, 28, 293, DateTimeKind.Local).AddTicks(3362),
+                            CreatedDate = new DateTime(2022, 10, 22, 20, 17, 19, 513, DateTimeKind.Local).AddTicks(8379),
                             Details = "this villa is nice",
                             ImageUrl = "https://media-cdn.tripadvisor.com/media/vr-splice-j/09/1f/7e/d1.jpg",
                             Name = "Royal Villa",
@@ -83,7 +85,7 @@ namespace MagicVilla_VillaApi.Migrations
                         {
                             Id = 2,
                             Amenity = "",
-                            CreatedDate = new DateTime(2022, 10, 22, 22, 25, 28, 293, DateTimeKind.Local).AddTicks(3373),
+                            CreatedDate = new DateTime(2022, 10, 22, 20, 17, 19, 513, DateTimeKind.Local).AddTicks(8392),
                             Details = "this villa is very good",
                             ImageUrl = "https://images.squarespace-cdn.com/content/v1/585562bcbe659442d503893f/c3b765c0-45e3-46b3-9ff9-b4101fb30674/01.+Exotik+Villas+Bali+-+Aloui.jpg?format=1000w",
                             Name = "Premium Pool Villa",
@@ -96,7 +98,7 @@ namespace MagicVilla_VillaApi.Migrations
                         {
                             Id = 3,
                             Amenity = "",
-                            CreatedDate = new DateTime(2022, 10, 22, 22, 25, 28, 293, DateTimeKind.Local).AddTicks(3374),
+                            CreatedDate = new DateTime(2022, 10, 22, 20, 17, 19, 513, DateTimeKind.Local).AddTicks(8394),
                             Details = "this villa is very good and also exspensive",
                             ImageUrl = "https://cf.bstatic.com/xdata/images/hotel/max1024x768/306027131.jpg?k=9bb7b6bfeab68dafed1919b814c007658b002eb2c94d65b59cc15bec83e04bfe&o=&hp=1",
                             Name = "Luxury Pool Villa",
@@ -109,7 +111,7 @@ namespace MagicVilla_VillaApi.Migrations
                         {
                             Id = 4,
                             Amenity = "",
-                            CreatedDate = new DateTime(2022, 10, 22, 22, 25, 28, 293, DateTimeKind.Local).AddTicks(3375),
+                            CreatedDate = new DateTime(2022, 10, 22, 20, 17, 19, 513, DateTimeKind.Local).AddTicks(8395),
                             Details = "this villa is very good and also exspensive and  height is big",
                             ImageUrl = "https://www.casagrand.co.in/wp-content/uploads/2021/06/1621872930952_florella.jpg",
                             Name = "Diamond  Villa",
@@ -122,7 +124,7 @@ namespace MagicVilla_VillaApi.Migrations
                         {
                             Id = 5,
                             Amenity = "",
-                            CreatedDate = new DateTime(2022, 10, 22, 22, 25, 28, 293, DateTimeKind.Local).AddTicks(3376),
+                            CreatedDate = new DateTime(2022, 10, 22, 20, 17, 19, 513, DateTimeKind.Local).AddTicks(8397),
                             Details = "this villa is very good and also exspensive and  height&weight is big",
                             ImageUrl = "https://storage.googleapis.com/bd-az-01/buildings-v2/2560x1920/1760.jpg",
                             Name = "Diamond Pool Villa",
@@ -148,25 +150,9 @@ namespace MagicVilla_VillaApi.Migrations
                     b.Property<DateTime>("UpdatedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("VillaId")
-                        .HasColumnType("int");
-
                     b.HasKey("VillaNo");
 
-                    b.HasIndex("VillaId");
-
                     b.ToTable("VillaNumbers");
-                });
-
-            modelBuilder.Entity("MagicVilla_VillaApi.Models.VillaNumber", b =>
-                {
-                    b.HasOne("MagicVilla_VillaApi.Models.Villa", "Villa")
-                        .WithMany()
-                        .HasForeignKey("VillaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Villa");
                 });
 #pragma warning restore 612, 618
         }
