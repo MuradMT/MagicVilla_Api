@@ -4,6 +4,7 @@ using MagicVilla_VillaApi.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicVilla_VillaApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221024081933_Occupations")]
+    partial class Occupations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,12 +33,14 @@ namespace MagicVilla_VillaApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Amenity")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Details")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
@@ -68,7 +72,7 @@ namespace MagicVilla_VillaApi.Migrations
                         {
                             Id = 1,
                             Amenity = "",
-                            CreatedDate = new DateTime(2022, 10, 27, 0, 51, 54, 648, DateTimeKind.Local).AddTicks(9716),
+                            CreatedDate = new DateTime(2022, 10, 24, 12, 19, 33, 684, DateTimeKind.Local).AddTicks(4074),
                             Details = "this villa is nice",
                             ImageUrl = "https://media-cdn.tripadvisor.com/media/vr-splice-j/09/1f/7e/d1.jpg",
                             Name = "Royal Villa",
@@ -81,7 +85,7 @@ namespace MagicVilla_VillaApi.Migrations
                         {
                             Id = 2,
                             Amenity = "",
-                            CreatedDate = new DateTime(2022, 10, 27, 0, 51, 54, 648, DateTimeKind.Local).AddTicks(9728),
+                            CreatedDate = new DateTime(2022, 10, 24, 12, 19, 33, 684, DateTimeKind.Local).AddTicks(4083),
                             Details = "this villa is very good",
                             ImageUrl = "https://images.squarespace-cdn.com/content/v1/585562bcbe659442d503893f/c3b765c0-45e3-46b3-9ff9-b4101fb30674/01.+Exotik+Villas+Bali+-+Aloui.jpg?format=1000w",
                             Name = "Premium Pool Villa",
@@ -94,7 +98,7 @@ namespace MagicVilla_VillaApi.Migrations
                         {
                             Id = 3,
                             Amenity = "",
-                            CreatedDate = new DateTime(2022, 10, 27, 0, 51, 54, 648, DateTimeKind.Local).AddTicks(9729),
+                            CreatedDate = new DateTime(2022, 10, 24, 12, 19, 33, 684, DateTimeKind.Local).AddTicks(4084),
                             Details = "this villa is very good and also exspensive",
                             ImageUrl = "https://cf.bstatic.com/xdata/images/hotel/max1024x768/306027131.jpg?k=9bb7b6bfeab68dafed1919b814c007658b002eb2c94d65b59cc15bec83e04bfe&o=&hp=1",
                             Name = "Luxury Pool Villa",
@@ -107,7 +111,7 @@ namespace MagicVilla_VillaApi.Migrations
                         {
                             Id = 4,
                             Amenity = "",
-                            CreatedDate = new DateTime(2022, 10, 27, 0, 51, 54, 648, DateTimeKind.Local).AddTicks(9730),
+                            CreatedDate = new DateTime(2022, 10, 24, 12, 19, 33, 684, DateTimeKind.Local).AddTicks(4085),
                             Details = "this villa is very good and also exspensive and  height is big",
                             ImageUrl = "https://www.casagrand.co.in/wp-content/uploads/2021/06/1621872930952_florella.jpg",
                             Name = "Diamond  Villa",
@@ -120,7 +124,7 @@ namespace MagicVilla_VillaApi.Migrations
                         {
                             Id = 5,
                             Amenity = "",
-                            CreatedDate = new DateTime(2022, 10, 27, 0, 51, 54, 648, DateTimeKind.Local).AddTicks(9731),
+                            CreatedDate = new DateTime(2022, 10, 24, 12, 19, 33, 684, DateTimeKind.Local).AddTicks(4086),
                             Details = "this villa is very good and also exspensive and  height&weight is big",
                             ImageUrl = "https://storage.googleapis.com/bd-az-01/buildings-v2/2560x1920/1760.jpg",
                             Name = "Diamond Pool Villa",
@@ -140,6 +144,7 @@ namespace MagicVilla_VillaApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SpecialDetails")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedTime")
