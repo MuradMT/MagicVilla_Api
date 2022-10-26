@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MagicVilla_VillaApi.Data;
 using MagicVilla_VillaApi.Logging.Abstract;
 using MagicVilla_VillaApi.Mapping;
@@ -9,6 +10,8 @@ using MagicVilla_VillaApi.Repositories.IRepository;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 
 namespace MagicVilla_VillaApi.Controllers
@@ -116,6 +119,7 @@ namespace MagicVilla_VillaApi.Controllers
         {
             try
             {
+
                 if (!ModelState.IsValid)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
