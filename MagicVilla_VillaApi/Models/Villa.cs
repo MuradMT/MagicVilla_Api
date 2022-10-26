@@ -9,7 +9,7 @@ namespace MagicVilla_VillaApi.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        
+        [Required]
         public string Name { get; set; }
         public string Details { get; set; }
         public double Rate { get; set; }
@@ -17,6 +17,7 @@ namespace MagicVilla_VillaApi.Models
         public int Sqft { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        [Required]
         public string ImageUrl { get; set; }
         public string Amenity { get; set; }
 
