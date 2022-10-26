@@ -1,9 +1,17 @@
 
 
 
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+
 using MagicVilla_Web.Mapping.AutoMapper;
+using MagicVilla_Web.Models.Dtos;
 using MagicVilla_Web.Services;
 using MagicVilla_Web.Services.IService;
+
+using System;
 
 namespace MagicVilla_Web
 {
@@ -12,15 +20,14 @@ namespace MagicVilla_Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddAutoMapper(typeof(MappingConfig));
             builder.Services.AddHttpClient<IVillaService,VillaService>();
             builder.Services.AddScoped<IVillaService, VillaService>();
             var app = builder.Build();
-
             // Configure the HTTP request pipeline.
+          
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");

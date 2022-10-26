@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MagicVilla_Web.Models;
 using MagicVilla_Web.Models.Dtos;
 using MagicVilla_Web.Services.IService;
@@ -11,7 +12,9 @@ namespace MagicVilla_Web.Controllers
     {
         private IVillaService _service;
         private IMapper _mapper;
-        public VillaController1(IVillaService service,IMapper mapper)
+    
+        public VillaController1(IVillaService service, IMapper mapper
+            )
         {
             _service = service;
             _mapper = mapper;
@@ -20,12 +23,32 @@ namespace MagicVilla_Web.Controllers
         {
             List<VillaDto> list = new();
             var response = await _service.GetAllAsync<APIResponse>();
-            if(response != null && response.IsSuccess)
+            if (response != null && response.IsSuccess)
             {
-                list = JsonConvert.DeserializeObject<List<VillaDto>>(Convert.ToString
-                    (response.Result));
+                list = JsonConvert.DeserializeObject<List<VillaDto>>(Convert.ToString(response.Result));
             }
-            return View(list) ;
+            return View(list);
+        }
+        public async Task<IActionResult> CreateVilla()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateVilla(VillaCreateDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await _service.CreateAsync<APIResponse>(model);
+                if (response != null && response.IsSuccess)
+                {
+                    return RedirectToAction(nameof(IndexVilla));
+                }
+            }
+          
+            
+            return View(model);
         }
     }
 }
