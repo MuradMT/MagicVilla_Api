@@ -22,32 +22,6 @@ namespace MagicVilla_VillaApi.Repositories
             await SaveAsync();
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true)
-        {
-            IQueryable<T> query = dbSet;
-            if (!tracked)
-            {
-                query = query.AsNoTracking();
-            }
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-            return await query.FirstOrDefaultAsync(filter);
-
-        }
-
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter = null)
-        {
-            IQueryable<T> query = dbSet;
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-            return await query.ToListAsync();
-               
-        }
-
         public async Task RemoveAsync(T entity)
         {
             dbSet.Remove(entity);
@@ -59,6 +33,42 @@ namespace MagicVilla_VillaApi.Repositories
             await _context.SaveChangesAsync();
         }
 
-       
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, string includeProperties = null)
+        {
+            IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            if(includeProperties != null)
+            {
+                foreach (var item in includeProperties.Split(new char[] {','},StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(item);
+                }
+            }
+            return await query.ToListAsync();
+        }
+
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null, bool tracked = true, string includeProperties = null)
+        {
+            IQueryable<T> query = dbSet;
+            if (!tracked)
+            {
+                query = query.AsNoTracking();
+            }
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            if (includeProperties != null)
+            {
+                foreach (var item in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(item);
+                }
+            }
+            return await query.FirstOrDefaultAsync(filter);
+        }
     }
 }

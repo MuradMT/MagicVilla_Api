@@ -30,7 +30,7 @@ namespace MagicVilla_VillaApi.Controllers
         {
             try
             {
-                var result = await _numberRepository.GetAllAsync();
+                IEnumerable<VillaNumber> result = await _numberRepository.GetAllAsync(includeProperties: "Villa");
                 _response.Result = _mapper.Map<VillaNumberDto>(result);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
