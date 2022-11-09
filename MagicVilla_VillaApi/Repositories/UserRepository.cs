@@ -3,6 +3,7 @@ using MagicVilla_VillaApi.Models;
 using MagicVilla_VillaApi.Models.Contexts;
 using MagicVilla_VillaApi.Models.Dtos;
 using MagicVilla_VillaApi.Repositories.IRepository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -32,9 +33,9 @@ namespace MagicVilla_VillaApi.Repositories
             return false;
         }
 
-        public Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
+        public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
         {
-            var user = _db.LocalUsers.FirstOrDefault
+            var user = await _db.LocalUsers.FirstOrDefaultAsync
                  (x => x.UserName == loginRequestDto.Username &&
                  x.Password == loginRequestDto.Password);
             if(user == null)
@@ -55,6 +56,12 @@ namespace MagicVilla_VillaApi.Repositories
                
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
+            var loginResponseDto = new LoginResponseDto()
+            {
+                Token =tokenHandler.WriteToken(token),
+                User=user
+            };
+            return loginResponseDto;
         }
 
         public async Task<LocalUser> Register(RegistrationRequestDto registrationRequestDto)
