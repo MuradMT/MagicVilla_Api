@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Microsoft.EntityFrameworkCore;
 
 namespace MagicVilla_VillaApi.Controllers
 {
@@ -90,7 +91,7 @@ namespace MagicVilla_VillaApi.Controllers
             {
                 if(await _repository.GetAsync(u => u.Id == villaNumberCreateDto.VillaId) != null)
                 {
-                    ModelState.AddModelError("CustomError", "Villa number already exists");
+                    ModelState.AddModelError("ErrorMessages", "Villa number already exists");
                     _response.StatusCode=HttpStatusCode.BadRequest;
                     _response.Result = ModelState;
                     return BadRequest(_response);
@@ -167,7 +168,7 @@ namespace MagicVilla_VillaApi.Controllers
             {
                 if (await _repository.GetAsync(u => u.Id == villaNumberUpdateDto.VillaId) != null)
                 {
-                    ModelState.AddModelError("CustomError", "Villa number already exists");
+                    ModelState.AddModelError("ErrorMessages", "Villa number already exists");
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     _response.Result = ModelState;
                     return BadRequest(_response);
@@ -235,7 +236,6 @@ namespace MagicVilla_VillaApi.Controllers
             }
             return _response;
         }
-
     }
 
 }
