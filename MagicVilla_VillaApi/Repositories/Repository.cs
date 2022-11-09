@@ -42,7 +42,7 @@ namespace MagicVilla_VillaApi.Repositories
             }
             if(includeProperties != null)
             {
-                foreach (var item in includeProperties.Split(new char[] {','},StringSplitOptions.RemoveEmptyEntries))
+                foreach (var item in  includeProperties.Split(new char[] {','},StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(item);
                 }
