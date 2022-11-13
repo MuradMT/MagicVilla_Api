@@ -40,7 +40,11 @@ namespace MagicVilla_VillaApi.Repositories
                  x.Password == loginRequestDto.Password);
             if(user == null)
             {
-                return null;
+                return new LoginResponseDto
+                {
+                    Token=String.Empty,
+                    User=null
+                };
             }
             var tokenHandler=new JwtSecurityTokenHandler();
             var key=Encoding.ASCII.GetBytes(secretKey);
