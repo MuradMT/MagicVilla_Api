@@ -10,7 +10,7 @@ using MagicVilla_Web.Mapping.AutoMapper;
 using MagicVilla_Web.Models.Dtos;
 using MagicVilla_Web.Services;
 using MagicVilla_Web.Services.IService;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 
 namespace MagicVilla_Web
@@ -27,9 +27,33 @@ namespace MagicVilla_Web
             builder.Services.AddScoped<IVillaService, VillaService>();
             builder.Services.AddHttpClient<IVillaNumberService, VillaNumberService>();
             builder.Services.AddScoped<IVillaNumberService, VillaNumberService>();
+            builder.Services.AddHttpClient<IAuthService, AuthService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();  
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+              .AddCookie(options =>
+              {
+                  options.Cookie.HttpOnly = true;
+                  options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                  options.LoginPath = "/Auth/Login";
+                  options.AccessDeniedPath = "/Auth/AccessDenied";
+                  options.SlidingExpiration = true;
+              });
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(100);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             var app = builder.Build();
+
+            
+
             // Configure the HTTP request pipeline.
-          
+
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -41,9 +65,9 @@ namespace MagicVilla_Web
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -11,5 +11,6 @@
             Delete,
             Patch
         }
+        public static string SessionToken = "JWTToken";
     }
 }

@@ -12,8 +12,11 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Text.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace MagicVilla_VillaApi.Controllers
 {
@@ -21,8 +24,10 @@ namespace MagicVilla_VillaApi.Controllers
     //ede bilmeyimize komek edir
 
 
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class VillaApiController : ControllerBase
     {
         #region Comments
@@ -47,8 +52,9 @@ namespace MagicVilla_VillaApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize]
-        public async Task<ActionResult<APIResponse>> GetVillas()
+        [ResponseCache(CacheProfileName ="Default30"/*Duration =30,Location =ResponseCacheLocation.Any,NoStore =false*/)]
+        public async Task<ActionResult<APIResponse>> GetVillas([FromQuery(Name =("FilterOccupancy"))]int? occupancy,
+            int pageSize = 0, int pageNumber = 1)
         {
             #region Comments
             //_logger.LogInformation("Get all villas");
@@ -58,7 +64,20 @@ namespace MagicVilla_VillaApi.Controllers
             #endregion
             try
             {
-                var villas = await _db.GetAllAsync();
+                IEnumerable<Villa> villas;
+                if(occupancy > 0)
+                {
+                    villas = await _db.GetAllAsync(u => u.Occupancy == occupancy,
+                        pageSize: pageSize,
+                        pageNumber: pageNumber);
+                }
+                else
+                {
+                    villas = await _db.GetAllAsync(pageSize: pageSize,
+                        pageNumber: pageNumber);
+                }
+                Pagination page=new Pagination() { PageNumber=pageNumber,PageSize=pageSize};
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(page));
                 _response.Result = _mapper.Map<List<VillaDto>>(villas);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -72,14 +91,14 @@ namespace MagicVilla_VillaApi.Controllers
             return _response;
 
         }
-
+        
         [HttpGet("[action]", Name = "GetVilla")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [Authorize(Roles = "admin")]
+       
         public async Task<ActionResult<APIResponse>> GetVilla(int id)
         {
             try
@@ -122,7 +141,7 @@ namespace MagicVilla_VillaApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-       
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> CreateVilla([FromBody] VillaCreateDto villaDto)
         {
             try
@@ -180,7 +199,7 @@ namespace MagicVilla_VillaApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Authorize(Roles = "custom")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> DeleteVilla(int id)
         {
             try
@@ -223,6 +242,7 @@ namespace MagicVilla_VillaApi.Controllers
         [HttpPut("[action]", Name = "UpdateVilla")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> UpdateVilla(int id, [FromBody] VillaUpdateDto villaDto)
         {
             try
@@ -261,6 +281,7 @@ namespace MagicVilla_VillaApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> UpdatePartialVilla(int id, JsonPatchDocument<VillaUpdateDto> patch)
         {
             try
