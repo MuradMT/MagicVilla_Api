@@ -15,50 +15,57 @@ namespace MagicVilla_Web.Services
             _url = configuration.GetValue<string>("ServiceUrls:VillaApi");
         }
 
-        public Task<T> CreateAsync<T>(VillaCreateDto dto)
+        public Task<T> CreateAsync<T>(VillaCreateDto dto, string token)
         {
             return SendAsync<T>(new APIRequest
             {
                 apiType=SD.ApiType.Post,
                 Data=dto,
-                Url=_url+"/api/VillaApi/CreateVilla"
+                Url=_url+"/api/v1/VillaApi/CreateVilla",
+                Token=token
             });
         }
 
-        public Task<T> DeleteAsync<T>(int id)
+        public Task<T> DeleteAsync<T>(int id, string token)
         {
             return SendAsync<T>(new APIRequest
             {
                 apiType = SD.ApiType.Delete,
-                Url = _url + "/api/VillaApi/DeleteVilla?id=" + id
+                Url = _url + "/api/v1/VillaApi/DeleteVilla?id=" + id,
+
+                Token = token
+
             }) ;
         }
 
-        public Task<T> GetAllAsync<T>()
+        public Task<T> GetAllAsync<T>(string token)
         {
             return SendAsync<T>(new APIRequest
             {
                 apiType = SD.ApiType.Get,
-                Url = _url + "/api/VillaApi/GetVillas"
+                Url = _url + "/api/v1/VillaApi/GetVillas",
+                Token = token
             });
         }
 
-        public Task<T> GetAsync<T>(int id)
+        public Task<T> GetAsync<T>(int id, string token)
         {
             return SendAsync<T>(new APIRequest
             {
                 apiType = SD.ApiType.Get,
-                Url = _url + "/api/VillaApi/GetVilla?id=" + id 
+                Url = _url + "/api/v1/VillaApi/GetVilla?id=" + id ,
+                Token = token
             });
         }
 
-        public Task<T> UpdateAsync<T>(VillaUpdateDto dto)
+        public Task<T> UpdateAsync<T>(VillaUpdateDto dto, string token)
         {
             return SendAsync<T>(new APIRequest
             {
                 apiType = SD.ApiType.Put,
                 Data = dto,
-                Url = _url + "/api/VillaApi/UpdateVilla?id=" + dto.Id
+                Url = _url + "/api/v1/VillaApi/UpdateVilla?id=" + dto.Id,
+                Token = token
             });
         }
     }
